@@ -43,6 +43,7 @@ unsigned int sleepTime = 500;     // Sleep duration between actions
 unsigned int minPotValue = 140;   // if potValue < minPotValue => off
 unsigned int maxPotValue = 1016;  // if potValue > maxPotValue => on
 bool on;
+bool invert_pot;
 
 unsigned long currentPeriodBegin = 0;
 unsigned int potValue;
@@ -55,6 +56,7 @@ void setup() {
   pinMode(outPin, OUTPUT);
   pinMode(ledPin, OUTPUT);
   on = true;
+  invert_pot = true;
   digitalWrite(outPin, HIGH);
   digitalWrite(ledPin, HIGH);
   #ifdef dbg
@@ -73,6 +75,7 @@ void loop() {
   potValue = analogRead(potPin);
   debug(String(on));
   if (abs(potValue - lastPotValue) > 3) {
+  if (invert_pot) potValue = 1024 - potValue;
     lastPotValue = potValue;
     if (potValue < minPotValue) {
       debug("< min => OFF");

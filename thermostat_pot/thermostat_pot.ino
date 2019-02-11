@@ -70,6 +70,27 @@ void debug(String message) {
   #endif
 }
 
+float unit_sigmoid(float x) {
+  // Sigmoid approximation defined at x=0 and x=1
+  // http://www.flong.com/texts/code/shapers_exp/
+  // * 2x² if x in [0, 0.5]
+  // * 1-2(1-x)² if x in [0.5, 1]
+  if (x >= 0 and x < 0.5) {
+    return 2*sq(x);
+  } else if (x >= 0.5 and x <= 1) {
+    return 1-2*sq(1-x);
+  } else {
+    // Shouldn't appends
+    debug("ERROR in Sigmoid: " + String(x));
+    return -1;
+  }
+}
+
+float sigmoid_map(float x, float x_min, float x_max, float y_max) {
+  // Return the sigmoid (approximation) value of x in range [x_min, x_max], [0, y_max]
+  return (y_max * unit_sigmoid((x - x_min) / (x_max - x_min)));
+}
+
 unsigned int read_pot_value(unsigned int nb_reads=4) {
   // Return potentiometer value, average reading of multiple reads
   word sum = 0;
@@ -110,11 +131,8 @@ void loop() {
       blink_led(6);
       digitalWrite(ledPin, HIGH);
     } else {
-      // onDuration = (unsigned int)(potValue * potToTimeRatio);
-      onDuration = map(potValue, minPotValue, maxPotValue, 0, globalPeriod);
-      #ifdef dbg
-        Serial.println("onDuration: " + String(onDuration) + " = " + String(onDuration*(100.0/(float)globalPeriod)) + '%');
-      #endif
+      onDuration = sigmoid_map(potValue, minPotValue, maxPotValue, globalPeriod);
+      debug("onDuration: " + String(onDuration) + " = " + String(onDuration*(100.0/(float)globalPeriod)) + '%');
     }
   }
   // time to switch on ?

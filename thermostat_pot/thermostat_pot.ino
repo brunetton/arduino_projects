@@ -70,6 +70,17 @@ void debug(String message) {
   #endif
 }
 
+void blink_led(byte nb_times, byte d=200) {
+  digitalWrite(ledPin, LOW);
+  delay(d);
+  for(byte i = 0; i < nb_times; i++) {
+    digitalWrite(ledPin, HIGH);
+    delay(d);
+    digitalWrite(ledPin, LOW);
+    delay(d);
+  }
+}
+
 void loop() {
   // pot read
   potValue = analogRead(potPin);
@@ -81,9 +92,13 @@ void loop() {
     if (potValue < minPotValue) {
       debug("< min => OFF");
       onDuration = 0;
+      blink_led(3);
+      digitalWrite(ledPin, LOW);
     } else if (potValue >= maxPotValue) {
       debug(">= max => ON");
       onDuration = globalPeriod;
+      blink_led(6);
+      digitalWrite(ledPin, HIGH);
     } else {
       // onDuration = (unsigned int)(potValue * potToTimeRatio);
       onDuration = map(potValue, minPotValue, maxPotValue, 0, globalPeriod);

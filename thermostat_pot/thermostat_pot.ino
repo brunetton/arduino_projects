@@ -40,7 +40,7 @@ TODO:
 #endif
 
 unsigned int sleepTime = 500;     // Sleep duration between actions
-unsigned int minPotValue = 140;   // if potValue < minPotValue => off
+unsigned int minPotValue = 300;   // if potValue < minPotValue => off
 unsigned int maxPotValue = 1016;  // if potValue > maxPotValue => on
 bool on;
 bool invert_pot;

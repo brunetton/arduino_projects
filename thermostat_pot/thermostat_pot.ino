@@ -42,7 +42,7 @@ TODO:
 unsigned int sleepTime = 500;     // Sleep duration between actions
 unsigned int minPotValue = 140;   // if potValue < minPotValue => off
 unsigned int maxPotValue = 1016;  // if potValue > maxPotValue => on
-boolean on;
+bool on;
 
 unsigned long currentPeriodBegin = 0;
 unsigned int potValue;
@@ -55,7 +55,7 @@ void setup() {
   pinMode(outPin, OUTPUT);
   pinMode(ledPin, OUTPUT);
   on = true;
-  digitalWrite(outPin, LOW);
+  digitalWrite(outPin, HIGH);
   digitalWrite(ledPin, HIGH);
   #ifdef dbg
   Serial.begin(1200);
@@ -93,7 +93,7 @@ void loop() {
   if (!on && onDuration > 100 && (millis() - currentPeriodBegin > globalPeriod)) {
     // Switch on
     currentPeriodBegin = millis();
-    digitalWrite(outPin, LOW);
+    digitalWrite(outPin, HIGH);
     digitalWrite(ledPin, HIGH);
     on = true;
   }
@@ -101,7 +101,7 @@ void loop() {
   if (on && onDuration < globalPeriod && (millis() - currentPeriodBegin > onDuration)) {
     // Serial.print("millis() - currentPeriodBegin: "); Serial.println(millis() - currentPeriodBegin);
     // Switch off
-    digitalWrite(outPin, HIGH);
+    digitalWrite(outPin, LOW);
     digitalWrite(ledPin, LOW);
     on = false;
   }

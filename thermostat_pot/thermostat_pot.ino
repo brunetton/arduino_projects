@@ -73,7 +73,6 @@ void debug(String message) {
 void loop() {
   // pot read
   potValue = analogRead(potPin);
-  if (abs(potValue - lastPotValue) > 3) {
   if (invert_pot) potValue = 1024 - potValue;
   // debug(String(on));
   if (abs((int) potValue - (int) lastPotValue) > 7) {

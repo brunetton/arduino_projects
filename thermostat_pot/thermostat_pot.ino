@@ -73,9 +73,11 @@ void debug(String message) {
 void loop() {
   // pot read
   potValue = analogRead(potPin);
-  debug(String(on));
   if (abs(potValue - lastPotValue) > 3) {
   if (invert_pot) potValue = 1024 - potValue;
+  // debug(String(on));
+  if (abs((int) potValue - (int) lastPotValue) > 7) {
+    Serial.println("\npot: " + String(lastPotValue) + " -> " + String(potValue));
     lastPotValue = potValue;
     if (potValue < minPotValue) {
       debug("< min => OFF");
@@ -87,8 +89,7 @@ void loop() {
       // onDuration = (unsigned int)(potValue * potToTimeRatio);
       onDuration = map(potValue, minPotValue, maxPotValue, 0, globalPeriod);
       #ifdef dbg
-        Serial.print("potValue: "); Serial.println(potValue);
-        Serial.print("onDuration: "); Serial.println(onDuration);
+        Serial.println("onDuration: " + String(onDuration) + " = " + String(onDuration*(100.0/(float)globalPeriod)) + '%');
       #endif
     }
   }

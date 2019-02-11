@@ -70,6 +70,16 @@ void debug(String message) {
   #endif
 }
 
+unsigned int read_pot_value(unsigned int nb_reads=4) {
+  // Return potentiometer value, average reading of multiple reads
+  word sum = 0;
+  for (int i=1; i <= nb_reads; i++) {
+    potValue = analogRead(potPin);
+    sum += potValue;
+  }
+  return sum / nb_reads;
+}
+
 void blink_led(byte nb_times, byte d=200) {
   digitalWrite(ledPin, LOW);
   delay(d);
@@ -83,7 +93,7 @@ void blink_led(byte nb_times, byte d=200) {
 
 void loop() {
   // pot read
-  potValue = analogRead(potPin);
+  potValue = read_pot_value();
   if (invert_pot) potValue = 1024 - potValue;
   // debug(String(on));
   if (abs((int) potValue - (int) lastPotValue) > 7) {

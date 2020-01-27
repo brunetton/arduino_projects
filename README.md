@@ -1,4 +1,6 @@
-# DHT11 / DTH22 thermostat
+# Personal Arduino projects
+
+## DHT11 / DTH22 thermostat
 
 [DHT11 / DTH22](https://learn.adafruit.com/dht) based simple thermostat to control a relay.
 
@@ -7,7 +9,7 @@ Based on [MakerduDimanche's gist](https://gist.github.com/MakerduDimanche/cb51ab
 Integrated led will blink when relay is passing (heat in ON).
 At program start, led blinks quickly to let user identify it.
 
-## Usage
+### Usage
 
 - download `DHT sensor library` zip from https://github.com/adafruit/DHT-sensor-library/releases
 - download `Adafruit Sensor library` zip from https://github.com/adafruit/Adafruit_Sensor/releases
@@ -20,3 +22,7 @@ At program start, led blinks quickly to let user identify it.
     - `DHT_PIN`
     - `RELAIS_PIN`
 - when program starts, it makes
+
+## Potentiometer thermostat
+
+"Thermostat" that reads heating frequency from a potentiometer (no temperature is read).
